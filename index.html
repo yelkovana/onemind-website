@@ -255,19 +255,14 @@
             background: linear-gradient(145deg, #0f0c29, #302b63, #24243e);
         }
 
-        .project-icon-text {
-            font-size: 3rem;
-            font-weight: 700;
-            color: rgba(255,255,255,0.08);
-            position: absolute;
-            letter-spacing: -0.04em;
-        }
-
-        .project-emoji {
-            font-size: 3.5rem;
+        .project-app-icon {
+            width: 96px;
+            height: 96px;
+            border-radius: 22px;
+            object-fit: cover;
             position: relative;
             z-index: 1;
-            filter: drop-shadow(0 8px 24px rgba(0,0,0,0.3));
+            box-shadow: 0 12px 40px rgba(0,0,0,0.3);
         }
 
         .project-body {
@@ -652,22 +647,20 @@
             <div class="projects-grid">
                 <div class="project-card sr sr-d1">
                     <div class="project-thumb project-thumb-1">
-                        <span class="project-icon-text">MUSIC AI</span>
-                        <span class="project-emoji">🎵</span>
+                        <img src="nailart_icon.png" alt="AI Nail Art Generator" class="project-app-icon">
                     </div>
                     <div class="project-body">
-                        <h3>Music AI: Song Generator</h3>
-                        <p>AI-powered music creation</p>
+                        <h3>AI Nail Art Generator &amp; Design</h3>
+                        <p>AI-powered nail art creation</p>
                     </div>
                 </div>
                 <div class="project-card sr sr-d2">
                     <div class="project-thumb project-thumb-2">
-                        <span class="project-icon-text">AI VIDEO</span>
-                        <span class="project-emoji">🎬</span>
+                        <img src="influencer_icon.png" alt="InfluencerAI" class="project-app-icon">
                     </div>
                     <div class="project-body">
-                        <h3>AI Video &amp; Photo Generator App</h3>
-                        <p>Create with artificial intelligence</p>
+                        <h3>InfluencerAI</h3>
+                        <p>AI-powered influencer content creation</p>
                     </div>
                 </div>
             </div>
