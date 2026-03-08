@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OneMind</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --white: #ffffff;
+            --bg-light: #f5f5f7;
+            --blue: #0071e3;
+            --blue-hover: #0077ed;
+            --blue-dark: #06c;
+            --blue-bg: #f5f8ff;
+            --text-primary: #1d1d1f;
+            --text-secondary: #6e6e73;
+            --text-tertiary: #86868b;
+            --border: #d2d2d7;
+            --nav-bg: rgba(251, 251, 253, 0.8);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: var(--white);
+            color: var(--text-primary);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            line-height: 1.47059;
+            font-weight: 400;
+            letter-spacing: -0.022em;
+        }
+
+        ::selection { background: var(--blue); color: #fff; }
+
+        /* ===== NAV ===== */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--nav-bg);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            border-bottom: 0.5px solid rgba(0,0,0,0.08);
+        }
+
+        .nav-inner {
+            width: 100%;
+            max-width: 1024px;
+            padding: 0 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-logo {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-decoration: none;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover { color: var(--text-primary); }
+        .nav-links a.active { color: var(--text-primary); font-weight: 500; }
+
+        .nav-hamburger {
+            display: none;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        .nav-hamburger svg { display: block; }
+
+        /* ===== HERO ===== */
+        .hero {
+            padding: 160px 24px 100px;
+            text-align: center;
+            background: var(--text-primary);
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 140%;
+            height: 140%;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(ellipse at 50% 40%, rgba(0,113,227,0.12) 0%, transparent 60%);
+        }
+
+        .hero-content {
+            position: relative;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        .hero-label {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--blue);
+            letter-spacing: 0.01em;
+            margin-bottom: 16px;
+            opacity: 0;
+            animation: rise 0.8s 0.1s ease forwards;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6.5vw, 4.5rem);
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            line-height: 1.07;
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: rise 0.8s 0.25s ease forwards;
+        }
+
+        .hero p {
+            font-size: clamp(1.05rem, 2vw, 1.3rem);
+            font-weight: 400;
+            color: rgba(255,255,255,0.7);
+            max-width: 500px;
+            margin: 0 auto 36px;
+            line-height: 1.5;
+            opacity: 0;
+            animation: rise 0.8s 0.4s ease forwards;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--blue);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 980px;
+            font-size: 1rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background 0.2s;
+            opacity: 0;
+            animation: rise 0.8s 0.55s ease forwards;
+        }
+
+        .hero-cta:hover { background: var(--blue-hover); }
+
+        .hero-cta svg {
+            width: 18px; height: 18px;
+            transition: transform 0.2s;
+        }
+
+        .hero-cta:hover svg { transform: translateX(3px); }
+
+        @keyframes rise {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== SECTION COMMONS ===== */
+        .section {
+            padding: 100px 24px;
+        }
+
+        .section-inner {
+            max-width: 980px;
+            margin: 0 auto;
+        }
+
+        .section-gray { background: var(--bg-light); }
+
+        .section-eyebrow {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--blue);
+            margin-bottom: 8px;
+        }
+
+        .section-heading {
+            font-size: clamp(1.8rem, 4vw, 3rem);
+            font-weight: 700;
+            letter-spacing: -0.035em;
+            line-height: 1.1;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+        }
+
+        .section-subheading {
+            font-size: clamp(1rem, 1.8vw, 1.2rem);
+            color: var(--text-secondary);
+            max-width: 600px;
+            line-height: 1.5;
+        }
+
+        /* ===== PROJECTS ===== */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 56px;
+        }
+
+        .project-card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: scale(1.015);
+            box-shadow: 0 8px 36px rgba(0,0,0,0.08);
+        }
+
+        .project-thumb {
+            height: 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-thumb-1 {
+            background: linear-gradient(145deg, #1a1a2e, #16213e);
+        }
+
+        .project-thumb-2 {
+            background: linear-gradient(145deg, #0f0c29, #302b63, #24243e);
+        }
+
+        .project-icon-text {
+            font-size: 3rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.08);
+            position: absolute;
+            letter-spacing: -0.04em;
+        }
+
+        .project-emoji {
+            font-size: 3.5rem;
+            position: relative;
+            z-index: 1;
+            filter: drop-shadow(0 8px 24px rgba(0,0,0,0.3));
+        }
+
+        .project-body {
+            padding: 24px 28px 28px;
+        }
+
+        .project-body h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-bottom: 4px;
+            color: var(--text-primary);
+        }
+
+        .project-body p {
+            font-size: 0.88rem;
+            color: var(--text-tertiary);
+            font-weight: 400;
+        }
+
+        /* ===== WHO WE ARE / MISSION / VISION ===== */
+        .about-hero-text {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 80px;
+        }
+
+        .about-hero-text h2 {
+            font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.15;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+        }
+
+        .about-hero-text p {
+            font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .value-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 40px 36px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .value-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 36px rgba(0,0,0,0.06);
+        }
+
+        .value-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .value-icon-mission { background: linear-gradient(135deg, #e3f0ff, #c8dfff); }
+        .value-icon-vision { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); }
+
+        .value-card h3 {
+            font-size: 1.35rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+
+        .value-card p {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* ===== CONTACT ===== */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            margin-top: 48px;
+            align-items: center;
+        }
+
+        .contact-item {
+            margin-bottom: 28px;
+        }
+
+        .contact-label {
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--text-tertiary);
+            margin-bottom: 4px;
+        }
+
+        .contact-val {
+            font-size: 1.05rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            line-height: 1.5;
+        }
+
+        .contact-val a {
+            color: var(--blue);
+            text-decoration: none;
+        }
+
+        .contact-val a:hover { text-decoration: underline; }
+
+        .contact-map-card {
+            background: linear-gradient(145deg, #1d1d1f, #2d2d30);
+            border-radius: 20px;
+            height: 280px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-map-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(0,113,227,0.1) 0%, transparent 60%);
+        }
+
+        .map-pin {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .map-pin-label {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.12);
+            padding: 8px 20px;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 0.82rem;
+            font-weight: 600;
+        }
+
+        .map-pin-dot {
+            width: 12px;
+            height: 12px;
+            background: var(--blue);
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px rgba(0,113,227,0.2), 0 0 0 8px rgba(0,113,227,0.08);
+            animation: mapPulse 2.5s ease-in-out infinite;
+        }
+
+        @keyframes mapPulse {
+            0%, 100% { box-shadow: 0 0 0 4px rgba(0,113,227,0.2), 0 0 0 8px rgba(0,113,227,0.08); }
+            50% { box-shadow: 0 0 0 8px rgba(0,113,227,0.15), 0 0 0 16px rgba(0,113,227,0.05); }
+        }
+
+        .map-city-bg {
+            position: absolute;
+            font-size: 4.5rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.025);
+            letter-spacing: -0.04em;
+            white-space: nowrap;
+        }
+
+        /* ===== LEGAL PAGES ===== */
+        .legal-page {
+            padding: 130px 24px 100px;
+        }
+
+        .legal-inner {
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        .legal-page-title {
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            line-height: 1.1;
+            color: var(--text-primary);
+            margin-bottom: 48px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .legal-section-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-top: 40px;
+            margin-bottom: 16px;
+            letter-spacing: -0.01em;
+        }
+
+        .legal-section-title:first-of-type {
+            margin-top: 0;
+        }
+
+        .legal-p {
+            font-size: 0.94rem;
+            color: var(--text-secondary);
+            line-height: 1.75;
+            margin-bottom: 12px;
+        }
+
+        .legal-p strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .legal-p a {
+            color: var(--blue);
+            text-decoration: none;
+        }
+
+        .legal-p a:hover { text-decoration: underline; }
+
+        .legal-sub {
+            padding-left: 20px;
+            margin-bottom: 12px;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--bg-light);
+            padding: 20px 24px;
+            text-align: center;
+            font-size: 0.78rem;
+            color: var(--text-tertiary);
+            border-top: 1px solid var(--border);
+        }
+
+        footer a {
+            color: var(--blue);
+            text-decoration: none;
+        }
+
+        /* ===== PAGES ===== */
+        .page { display: none; }
+        .page.active { display: block; }
+
+        /* ===== MOBILE NAV OVERLAY ===== */
+        .mobile-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 1001;
+            background: rgba(251,251,253,0.97);
+            backdrop-filter: blur(30px);
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+        }
+
+        .mobile-overlay.open { display: flex; }
+
+        .mobile-overlay a {
+            font-size: 1.4rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            text-decoration: none;
+            padding: 8px 0;
+        }
+
+        .mobile-overlay a:hover { color: var(--blue); }
+
+        .mobile-close {
+            position: absolute;
+            top: 12px; right: 20px;
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            color: var(--text-primary);
+            cursor: pointer;
+        }
+
+        /* ===== SCROLL REVEAL ===== */
+        .sr {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .sr.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .sr-d1 { transition-delay: 0.08s; }
+        .sr-d2 { transition-delay: 0.16s; }
+        .sr-d3 { transition-delay: 0.24s; }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 734px) {
+            .nav-links { display: none; }
+            .nav-hamburger { display: block; }
+            .projects-grid { grid-template-columns: 1fr; }
+            .values-grid { grid-template-columns: 1fr; }
+            .contact-grid { grid-template-columns: 1fr; }
+            .hero { padding: 140px 24px 80px; }
+            .section { padding: 72px 24px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+    <div class="nav-inner">
+        <a href="#" class="nav-logo" onclick="go('main')">OneMind</a>
+        <ul class="nav-links">
+            <li><a href="#" class="active" onclick="go('main')">Home</a></li>
+            <li><a href="#" onclick="goTo('projects')">Projects</a></li>
+            <li><a href="#" onclick="goTo('about')">About</a></li>
+            <li><a href="#" onclick="go('terms')">Terms of Use</a></li>
+            <li><a href="#" onclick="go('privacy')">Privacy Policy</a></li>
+            <li><a href="#" onclick="goTo('contact')">Contact</a></li>
+        </ul>
+        <div class="nav-hamburger" onclick="document.getElementById('mob').classList.add('open')">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><line x1="2" y1="5" x2="16" y2="5"/><line x1="2" y1="9" x2="16" y2="9"/><line x1="2" y1="13" x2="16" y2="13"/></svg>
+        </div>
+    </div>
+</nav>
+
+<!-- Mobile Overlay -->
+<div class="mobile-overlay" id="mob">
+    <button class="mobile-close" onclick="this.parentElement.classList.remove('open')">&times;</button>
+    <a href="#" onclick="go('main');closeMob()">Home</a>
+    <a href="#" onclick="goTo('projects');closeMob()">Projects</a>
+    <a href="#" onclick="goTo('about');closeMob()">About</a>
+    <a href="#" onclick="go('terms');closeMob()">Terms of Use</a>
+    <a href="#" onclick="go('privacy');closeMob()">Privacy Policy</a>
+    <a href="#" onclick="goTo('contact');closeMob()">Contact</a>
+</div>
+
+<!-- ==================== MAIN PAGE ==================== -->
+<div id="page-main" class="page active">
+
+    <!-- Hero -->
+    <div class="hero">
+        <div class="hero-content">
+            <div class="hero-label">OneMind Development</div>
+            <h1>Professional, Personal Solutions</h1>
+            <p>We are dedicated engineers and entrepreneurs working hard to create a better future.</p>
+            <a href="#" class="hero-cta" onclick="goTo('about'); return false;">
+                Learn more
+                <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 9h10M10 5l4 4-4 4"/></svg>
+            </a>
+        </div>
+    </div>
+
+    <!-- Projects -->
+    <div class="section" id="projects">
+        <div class="section-inner">
+            <div class="sr">
+                <div class="section-eyebrow">Projects</div>
+                <h2 class="section-heading">What we build.</h2>
+            </div>
+            <div class="projects-grid">
+                <div class="project-card sr sr-d1">
+                    <div class="project-thumb project-thumb-1">
+                        <span class="project-icon-text">MUSIC AI</span>
+                        <span class="project-emoji">🎵</span>
+                    </div>
+                    <div class="project-body">
+                        <h3>Music AI: Song Generator</h3>
+                        <p>AI-powered music creation</p>
+                    </div>
+                </div>
+                <div class="project-card sr sr-d2">
+                    <div class="project-thumb project-thumb-2">
+                        <span class="project-icon-text">AI VIDEO</span>
+                        <span class="project-emoji">🎬</span>
+                    </div>
+                    <div class="project-body">
+                        <h3>AI Video &amp; Photo Generator App</h3>
+                        <p>Create with artificial intelligence</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- About -->
+    <div class="section section-gray" id="about">
+        <div class="section-inner">
+            <div class="about-hero-text sr">
+                <div class="section-eyebrow">Who We Are</div>
+                <h2>We help our customers across the world adapt to change that matters.</h2>
+                <p>Our team is specialized in software development, mobile app development, visual design and digital marketing.</p>
+            </div>
+            <div class="values-grid">
+                <div class="value-card sr sr-d1">
+                    <div class="value-icon value-icon-mission">🎯</div>
+                    <h3>Mission</h3>
+                    <p>Building most useful and creative solutions to our customers. Our aim is to provide fast and easy ways to improve human life. Our reputation is built on two things: happy customers and our skilled team.</p>
+                </div>
+                <div class="value-card sr sr-d2">
+                    <div class="value-icon value-icon-vision">🔭</div>
+                    <h3>Vision</h3>
+                    <p>We're moving to a post-digital era where we need to adapt ourselves to exist in private sector. We invest in continuous innovation, research and development. We aim to stay ahead of the pack, by always keeping an eye for the next level competitive advantages.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact -->
+    <div class="section" id="contact">
+        <div class="section-inner">
+            <div class="sr">
+                <div class="section-eyebrow">Contact Us</div>
+                <h2 class="section-heading">Get in touch.</h2>
+            </div>
+            <div class="contact-grid">
+                <div class="sr sr-d1">
+                    <div class="contact-item">
+                        <div class="contact-label">Address</div>
+                        <div class="contact-val">Mavi&#351;ehir Mah. 2042/1 Sk. No: 1 A<br>&#304;&#231; Kap&#305; No: 165 Kar&#351;&#305;yaka / &#304;zmir</div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-label">Email</div>
+                        <div class="contact-val"><a href="mailto:onemind.development@gmail.com">onemind.development@gmail.com</a></div>
+                    </div>
+                </div>
+                <div class="sr sr-d2">
+                    <div class="contact-map-card">
+                        <span class="map-city-bg">&#304;ZM&#304;R</span>
+                        <div class="map-pin">
+                            <div class="map-pin-label">OneMind &mdash; Kar&#351;&#305;yaka</div>
+                            <div class="map-pin-dot"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- ==================== TERMS OF USE ==================== -->
+<div id="page-terms" class="page">
+    <div class="legal-page">
+        <div class="legal-inner">
+            <h1 class="legal-page-title">Terms of Use</h1>
+
+            <h3 class="legal-section-title">Parties</h3>
+            <p class="legal-p">1- The parties to this contract are ONEMIND company and the user who accepts these terms of use. These terms of use entered into force as a result of the mutual agreement of both parties.</p>
+
+            <h3 class="legal-section-title">Standing</h3>
+            <p class="legal-p">2- In order to be a party to this contract, the user must be at least 14 years old and a person who has the ability to understand what he/she has read and has the capacity to act.</p>
+
+            <h3 class="legal-section-title">Definitions</h3>
+            <p class="legal-p">3- <strong>The Company;</strong> As a service and service provider, it refers to the company ''ONEMIND''.</p>
+            <p class="legal-p"><strong>Application;</strong> It refers to the virtual platform where the products and services created by ONEMIND company can be used on all devices, phones and computers.</p>
+            <p class="legal-p"><strong>Account;</strong> It means the account created by the users for the use of the services offered under the terms.</p>
+            <p class="legal-p"><strong>User;</strong> It refers to users who agree to use the applications offered by ONEMIND on online platforms within the framework of these terms of use and privacy policy.</p>
+            <p class="legal-p"><strong>Services;</strong> It refers to all of the services provided by ONEMIND within the scope and content of the application.</p>
+            <p class="legal-p"><strong>System Access Instruments;</strong> Refers to the User's account, the management page, and the materials that provide access to the application, such as username, password, code, password, which are only available to the User.</p>
+            <p class="legal-p"><strong>Communication channels;</strong> It refers to all communication methods such as instant notification on the platform, e-mail, telephone, sms, mms, etc.</p>
+            <p class="legal-p"><strong>Notification E-mail Address;</strong> It means the email address that users use up-to-date and validly to receive emails sent by ONEMIND.</p>
+            <p class="legal-p"><strong>Management page;</strong> For the performance and continuity of the service provided by ONEMIND, it refers to the special page where the jobs and transactions related to the users are conducted.</p>
+            <p class="legal-p"><strong>User Data;</strong> It means all data required for the service provided or shared by users within the scope of the application.</p>
+            <p class="legal-p"><strong>Period;</strong> It refers to the duration of use of the services provided by ONEMIND, determined by the users.</p>
+            <p class="legal-p"><strong>Reasonable Use;</strong> It refers to the use-value of the services provided by ONEMIND, based on the objective usage criteria of the users.</p>
+
+            <h3 class="legal-section-title">Topic and Scope</h3>
+            <p class="legal-p">4- The subject of this contract is to define the terms of use of all services and products to be offered by the company and to inform the users that they must provide usage within the framework of these conditions.</p>
+            <p class="legal-p">5- By accepting these conditions, the User undertakes that all kinds of services and applications offered by the company will be used within the specified conditions.</p>
+            <p class="legal-p">6- All damages that will occur in case of violation of these conditions by the user are the responsibility of the user, and the company will not be responsible for any damages that may occur as a result of not fulfilling these terms of use.</p>
+
+            <h3 class="legal-section-title">Duration</h3>
+            <p class="legal-p">7- These terms of use and privacy policy come become valid with the consent of the user in an electronic platform.</p>
+            <p class="legal-p">8- These terms of use will remain in effect from the moment the User becomes a member of the Application and will continue to have terms and consequences between the parties. The user's non-active use of the application does not terminate the contract, the contract expires if all data and the application of the user are deleted.</p>
+            <p class="legal-p">9- In the event that the period determined for user membership expires, the membership will be automatically renewed and continue to have provisions and results unless the user cancels it.</p>
+
+            <h3 class="legal-section-title">Data Protection and Processing</h3>
+            <p class="legal-p">10- The user gives explicit consent to the processing and storage of their personal data by the company, on the platforms that the company provides services at national and international. Users give consent to all activities and shares carried out with the aim of improving business and services. The collected data can be used for the perfect provision, improvement, and protection of the service provided.</p>
+            <p class="legal-p">11- Users can request the deletion of their data or find out which data has been processed by the company.</p>
+            <p class="legal-p">12- In the protection and processing of data, the company takes the necessary measures within the framework of legal legislation and regulations. Data related matters and transactions are subject to the legal regulations of the countries where the company headquarters and offices are located.</p>
+
+            <h3 class="legal-section-title">3rd Party Data Collection</h3>
+            <p class="legal-p">13- We can cooperate and share data with analytics companies and advertising companies in order to learn how our services are used, to produce different alternatives, and to keep customer satisfaction at a high level. These agencies will be able to access users' limited data.</p>
+            <p class="legal-p">14- While using our applications, the sites you enter when you click on another application or website link may collect your data. The terms of use and privacy policies of the company are not valid on these sites.</p>
+
+            <h3 class="legal-section-title">Communication Channels and Permission</h3>
+            <p class="legal-p">15- The company can send users free e-mails, share newsletters, and notify the changes made to the applications, for a periodic or indefinite period. When necessary, the company will able to notifications to its users regarding the application and other additional services they use. The user gives consent to the notifications made via e-mail, SMS, MMS, and application.</p>
+            <p class="legal-p">16- The user has the right to withdraw this consent. The company will not be responsible if users who do not accept notifications are not informed of the changes and updates. Users who want not to be notified regarding the mentioned matters by the company must inform the company by e-mail.</p>
+
+            <h3 class="legal-section-title">Responsibility and Commitment</h3>
+            <p class="legal-p">17- While the User is benefiting from the products or services in the application while performing any transaction related to the product or services, Users will act in accordance with all the terms and conditions contained in these terms of use and all applicable legislation of Users country's law, and the User has to agree read, understood and approved all terms and rules specified in this terms of use.</p>
+            <p class="legal-p">18- The company can make changes and updates on the application when it deems necessary. It can completely remove an existing feature or add a new feature. The user has allowed all these changes.</p>
+
+            <h3 class="legal-section-title">User Rights and Obligations</h3>
+            <p class="legal-p">19- The user must hide, protect, and secure system access instruments. This information should not be shared with third parties or used on any platform. This personal information means the security information that the user will need while using the apps.</p>
+            <p class="legal-p">20- The User always has the right to change and update the system access instruments and communication channels. (password, e-mail, telephone, etc.). These updates will be made through the application, and although it is not possible through the application, they can send their requests through their registered mail account to the company.</p>
+            <p class="legal-p">21- The right to use the System Access instruments belongs exclusively to the User. The user will not disclose this information to third parties. The User is entirely responsible for the results of the use of the System Access instruments by a third party. ONEMIND is not obliged to identify the persons who make such illegal access. The User accepts, declares, and undertakes that User is responsible for the use of this information by a third party and its consequences, without prejudice to the above-mentioned provisions, and that the transactions made by using this information are binding on User'. If the User finds out that User' password has been obtained by others, the User is obliged to inform the company immediately.</p>
+            <p class="legal-p">22- The User must ensure the security of the devices on which the User accesses the apps. The company will not be responsible for any damages caused by such negligence in the event that personal access information is lost or becomes unusable due to a virus on its own device.</p>
+            <p class="legal-p">23- The user is responsible for the activation of the communication instruments (E-mail, phone, etc.) defined while using the apps. The user should keep the communication instruments up to date. The company will not be responsible for any damages caused by the user losing access to these communication instruments or not keeping them updated.</p>
+            <p class="legal-p">24- While using the application, the user is obliged to use it in accordance with the application features. Otherwise, the company will not be responsible for any damages that may arise from the improper use of the apps.</p>
+            <p class="legal-p">25- When using the application, the user should use it in accordance with objective usage criteria. Objective usage criteria express the maximum limit a person can use under normal conditions. The user is responsible for using the application according to the criteria. Otherwise, the company has the right to disconnect the user from the application by giving prior notice or, if necessary, without giving any notice. The company will not be responsible for any damages that may arise from this.</p>
+            <p class="legal-p">26- The User declares and undertakes that all the information stated while start using the apps is correct and lawful. ONEMIND company does not have any responsibility to investigate the accuracy and legality of this information and will not be liable for any damages that may arise if the information provided is incorrect and unlawful.</p>
+            <p class="legal-p">27- The legal and criminal responsibility of all kinds of transactions made by the users within the application belongs to them. Users are obliged to comply with the regulations by the domestic law rules of their countries and international law rules and legislation.</p>
+            <p class="legal-p">28- While users are using the apps, they undertake that the contents they store comply with national and international legal rules and regulations. It is forbidden to store all kinds of information and documents that may constitute a crime.</p>
+            <p class="legal-p">29- It is forbidden for users to store data and store content that would violate personal rights, including all real and personal rights of third parties.</p>
+            <p class="legal-p">30- The company is not responsible for the content published by third parties in the Application and on the websites linked through the Application (Advertisement etc.)</p>
+            <p class="legal-p">31- The commitment to the accuracy and legality of the information, content, visual, and audio images provided and published by any third party is entirely the responsibility of those who perform these actions. The company does not undertake or guarantee the security, accuracy, and legality of services and content provided by third parties.</p>
+
+            <h3 class="legal-section-title">Apps' Rights and Limitation of Liability</h3>
+            <p class="legal-p">32- The company has the right to share information and documents related to User information, duly requested by national and international competent authorities. The company will not be responsible for any direct or indirect damages that may occur as a result of these shares.</p>
+            <p class="legal-p">33- The company has the right to unilaterally change and update the products, services, and contents offered in the application at any time. Again, the company has the right to restrict access to the application for a certain period of time, with or without notice, within the scope of necessary regulations and renewals. The company will not be liable for any direct or indirect damages arising from this update and change.</p>
+            <p class="legal-p">34- The company will not be liable for any direct or indirect damages in case of partial or complete deletion of data during the update of the apps, log in, and log out operations.</p>
+            <p class="legal-p">35- The company will not be liable in case of restriction or failure of access to the apps due to force majeure (earthquake, fire, natural disaster, terrorism, embargo, military or civil riots, internet and server access problems), external attacks or unpredictable problems against the apps.</p>
+            <p class="legal-p">36- The company will not be liable for any direct or indirect damages to the user in the event that the access of an application belonging to The Company in any country is restricted or completely cut by the state authority.</p>
+            <p class="legal-p">37- The company can use the User information for User security, fulfillment of its own obligations, some statistical evaluations and internal audits, or as demographic information for advertisement and promotion, classifying and keeping them on a database.</p>
+            <p class="legal-p">38- The company reserves the right to terminate the relationship of the user with the application with or without prior notice, if it detects uses that are not in compliance with the law and legal regulations. The company will not be liable for any direct or indirect damages that may occur as a result of this interruption.</p>
+            <p class="legal-p">39- In cases where the apps are restricted by the state authority as a result of the use of the apps against the law and the legal regulations of the country where User is in located, The Company reserves the right to recourse and compensate for the damage from the User.</p>
+            <p class="legal-p">40- As a result of mutual agreement with the user, The Company has limited the liability amount to "5" (five) USD for damages that may occur, except for all cases not mentioned in the contract. This amount includes Premium user losses only and represents the maximum amount payable based on Premium charges.</p>
+
+            <h3 class="legal-section-title">Violation of Terms of Use</h3>
+            <p class="legal-p">41- The user is obliged to comply with the specified terms of use. In case of violation of these conditions, the company reserves the right to detect and investigate these violations.</p>
+            <p class="legal-p">42- If The Company is directly aware of the fact that a crime has been committed, or based on a denunciation, The Company can send information and cooperate with all relevant legal authorities.</p>
+            <p class="legal-p">43- The company reserves the right to apply one of the following methods in case of violation of all or a part of the conditions and inappropriate behavior by the user;</p>
+            <p class="legal-p legal-sub">a. Sending a notify to the user by any communication instruments<br>b. Deleting criminal or infringing content which uploaded into the application<br>c. Limiting application use or terminating membership completely<br>d. Cooperating with legal authorities<br>e. All other works and transactions that the company deems appropriate to prevent and terminate the breach in question</p>
+            <p class="legal-p">44- In the event that the membership is terminated by the company as a result of violations of the conditions or improper behavior by the user, the company will not be liable for any damages caused by the deletion of the user's data, and no refund will be made to the user.</p>
+
+            <h3 class="legal-section-title">Contract Amendments and Interpretation of the contract in Favor of the Company</h3>
+            <p class="legal-p">45- The company has the right to update and change these Terms of Use and Privacy Policy all or any provision by unilaterally announcing it on the application.</p>
+            <p class="legal-p">46- If any of the provisions in these terms of use are invalid, all other provisions of the contract will continue to be valid. The invalid item will be interpreted in favor of the Company and will take effect in its new form.</p>
+
+            <h3 class="legal-section-title">Competent Court and Dispute Resolution</h3>
+            <p class="legal-p">47- In case of disputes between the parties of this contract, other than the matters specified in the terms of use, the parties will primarily seek negotiations and solutions within the framework of good faith rules.</p>
+            <p class="legal-p">48- For any problem or dispute, if the notification sent by one of the parties via e-mail is not answered within 30 working days or the problem is not resolved within 60 working days, the next article provision will be applied.</p>
+            <p class="legal-p">49- In the implementation and interpretation of this contract, the legal rules of the country where the headquarters of ONEMIND company or any of its branches are present will be applied, and the competent courts and enforcement offices will be the competent authorities of those countries.</p>
+
+            <h3 class="legal-section-title">Contact</h3>
+            <p class="legal-p">50- For all your questions, comments and suggestions regarding the terms of use, you can contact us directly via <a href="mailto:onemind.development@gmail.com">onemind.development@gmail.com</a>, e-mail address.</p>
+
+        </div>
+    </div>
+</div>
+
+<!-- ==================== PRIVACY POLICY ==================== -->
+<div id="page-privacy" class="page">
+    <div class="legal-page">
+        <div class="legal-inner">
+            <h1 class="legal-page-title">Privacy Policy</h1>
+
+            <p class="legal-p">1. Protection of user data and ensuring privacy are among the fundamental principles of the company.</p>
+            <p class="legal-p">2. The information provided by the users to use the application and the data accessed through the application will not be used for purposes other than those specified in the terms of use and privacy policy.</p>
+            <p class="legal-p">3. The company has the right to access the communication instruments specified by the user while registering for the application or updated later, for notification, campaign, marketing, communication and other purposes, unless the company has a written request to the contrary.</p>
+            <p class="legal-p">4. The company has the right to access the content that the user shares with the application, and this right will be used with third parties only in cases specified in the terms of use and privacy policy. Otherwise, user data and information will not be shared with third parties.</p>
+            <p class="legal-p">5. In order to identify the problems related to the system in the application and to solve the possible problems that may arise in the Application immediately, the Company may record the IP address of the Users, the information registered in the social network user account, and use these records for the purposes specified in the terms of use and privacy policy. These IP addresses can be used by the Company to define its users and visitors in general and to collect demographic data in a comprehensive way.</p>
+
+            <h3 class="legal-section-title">Data Kinds</h3>
+            <p class="legal-p">6. The types of data we collect are classified in 2 different categories. "Personal data" and "Anonymous data". Personal Data is the set of information that enables users to be identified and data provides access to user identity. Anonymous Data means data that is not related to personal information and refers to information that alone does not allow the user to be identified. The collection of personal and anonymous data is provided in 4 ways.</p>
+            <p class="legal-p"><strong>1-Information directly provided by Users;</strong><br>I. Personal data you use to create your account when logging into the application.<br>II. Data that is required by the application or can be accessed as a result of the service.<br>III. The e-mail address and contents you use when you send us e-mails.<br>IV. Data obtained as a result of participating in any survey that we may conduct, related to our application or regardless of the application you use.<br>V. All data associated with the application, which the user-specified company can access.</p>
+            <p class="legal-p"><strong>2-Information collected through technology;</strong><br>I. Our servers can collect the type of your mobile device or computer, the information of your mobile application and browser, your IP address and related technological information and data. This information includes data such as domain name, time of entering application and how use of the application.<br>II. The websites you visit can save small information on your computer or phone and then read that information when you visit the same site. The files in which this small information is saved are called cookies or definition information. Our application can access cookie data.</p>
+            <p class="legal-p"><strong>3-Information collected from you about others;</strong><br>I. Our users can send an application invitation to their friends through the application. In such cases, we can access the invited person's information. In this way, they can request the deletion of the data of the users or third parties whose data we have accessed.</p>
+            <p class="legal-p"><strong>4-Information collected through other platforms;</strong><br>I. We can provide information and data flow from other platforms for the purposes of strengthening our application and advertising. The owners of the data obtained in this way can request the deletion of their data.</p>
+
+            <h3 class="legal-section-title">Data Usage</h3>
+            <p class="legal-p">7. Generally speaking, the use of data is used to respond to requests from you and to provide better service;<br>a. Performing membership transactions.<br>b. Improving the services offered, developing new services and informing about them.<br>c. Promotion and marketing of application goods / products and services in line with the preference and liking of the Member Customer by re-marketing, targeting, profiling and analysis in line with the express consent of the users.<br>d. Resolving user problems and complaints.<br>e. Follow-up of accounting and purchasing transactions.<br>f. Providing information and process security and preventing malicious use.</p>
+            <p class="legal-p">8. The information obtained within the scope of the application can be used by the company and other collaborating persons and institutions without revealing the identity of the User in any way, only for various statistical evaluations, authorized marketing, database creation efforts and market research.</p>
+            <p class="legal-p">9. The collected data can be shared with our affiliated companies, in case of a company merger or acquisition, sharing can be provided with the company with which the partnership has been entered.</p>
+            <p class="legal-p">10. The company can provide links to other sites within the application, publish advertisements of third parties with whom it has an agreement with the Company, and direct users to the site of advertisers or contracted third parties through advertisements. The Company does not bear any responsibility for the privacy practices and policies of other Applications accessed via this link or the content they host. The user is bound by the own privacy policy of those sites.</p>
+            <p class="legal-p">11. The following situations will constitute exceptions to the privacy policy, and within these cases, the collected personal and anonymous data can be shared with 3rd parties.<br>a. In cases where the legal and legal regulations require data sharing.<br>b. In cases where information about the Users is requested in line with a research or investigation conducted by the authorized administrative or judicial authorities in accordance with the procedural method.<br>c. In cases where it is necessary to provide information to protect user rights and security.<br>d. In case of any crime detection, violations of rights against the institution or third parties, detection of illegal works and transactions, and the existence of actions that cause damage in the business and transaction area of the Company.</p>
+
+            <h3 class="legal-section-title">Choice of Use of Personal Data</h3>
+            <p class="legal-p">12. Users have a choice regarding the use of personal data.</p>
+            <p class="legal-p">13. The company can send promotional e-mails regarding the service, product or news bulletins received. Users have the right not to want to receive such e-mails. In this case, they can send an e-mail to the specified e-mail address or choose the option not to receive e-mail.</p>
+            <p class="legal-p">14. Changes to Terms of Use and Privacy Policy will be notified to our users by e-mail or similar communication instruments. In this type of notification, the communication preference of users will not be taken into account.</p>
+            <p class="legal-p">15. Users have the right to use and update their personal data as they wish.</p>
+
+            <h3 class="legal-section-title">Right to Information about the User's Personal Data Use</h3>
+            <p class="legal-p">16. The rights of the users on the processed personal data are as follows;<br>a. Learning whether personal data is processed or not<br>b. Requesting information if personal data has been processed<br>c. Learning the purpose of processing personal data and whether they are used appropriately for their purpose<br>d. Requesting correction of personal data in case of incomplete or incorrect processing to.<br>e. To know the third parties to whom personal data are transferred domestically or abroad<br>f. Requesting the deletion or destruction of personal data</p>
+
+            <h3 class="legal-section-title">Privacy and Protection of Personal Data</h3>
+            <p class="legal-p">17. The Company takes care to keep the confidential information provided to it private and confidential, to ensure and maintain confidentiality and to prevent the disclosure of all or any part of the confidential information to the public or unauthorized use and disclosure to a third party, and to take all measures.</p>
+            <p class="legal-p">18. The company works to provide the required standard and care regarding confidentiality. In this respect, users should use the applications and services offered carefully, and they should not share the application access tools with third parties and should not use carelessly in public areas.</p>
+            <p class="legal-p">19. The risks that may occur on the internet platform should be taken into consideration. The user should be careful and attentive in any personal data shared. The company does not guarantee 100% protection in any way. The user should be aware of this risk while using the application.</p>
+            <p class="legal-p">20. The Company will not be liable in case of data loss and disclosure of data that may arise from third parties, the platform it uses or user negligence. The user must show due diligence and accept the risks that may arise.</p>
+
+            <h3 class="legal-section-title">Right to Change Privacy Policy</h3>
+            <p class="legal-p">21. The company may renew or revise its privacy policy within certain periods in order to provide better service and protection of security. These renewals will be valid for our users as of the date of publication.</p>
+
+            <h3 class="legal-section-title">Contact</h3>
+            <p class="legal-p">25. For all your questions, opinions, suggestions, objections and complaints about the privacy policy, the use, collection, disclosure and sharing of personal information with third parties, you can contact us directly via <a href="mailto:onemind.development@gmail.com">onemind.development@gmail.com</a> e-mail address.</p>
+
+        </div>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+    &copy;2021, OneMind taraf&#305;ndan olu&#351;turulmu&#351;tur.
+</footer>
+
+<script>
+function go(page) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + page).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    setTimeout(initSR, 50);
+}
+
+function goTo(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-main').classList.add('active');
+    setTimeout(() => {
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 30);
+    setTimeout(initSR, 50);
+}
+
+function closeMob() {
+    document.getElementById('mob').classList.remove('open');
+}
+
+// Scroll reveal
+function initSR() {
+    const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.sr').forEach(el => {
+        el.classList.remove('visible');
+        obs.observe(el);
+    });
+}
+initSR();
+</script>
+</body>
+</html>
