@@ -648,21 +648,21 @@
                 <h2 class="section-heading">What we build.</h2>
             </div>
             <div class="projects-grid">
-                <a href="https://apps.apple.com/us/app/ai-nail-art-design-try-on/id6759449751" target="_blank" rel="noopener" class="project-card sr sr-d1">
+                <a href="https://apps.apple.com/us/app/ai-nail-art-design-try-on/id6759449751" target="_blank" rel="noopener" class="project-card sr sr-d1" data-app-id="6759449751">
                     <div class="project-thumb project-thumb-1">
-                        <img src="nailart_icon.png" alt="AI Nail Art Generator" class="project-app-icon">
+                        <img src="nailart_icon.png" alt="AI Nail Art · Design & Try-On" class="project-app-icon">
                     </div>
                     <div class="project-body">
-                        <h3>AI Nail Art Generator &amp; Design</h3>
+                        <h3 class="app-name">AI Nail Art · Design &amp; Try-On</h3>
                         <p>AI-powered nail art creation</p>
                     </div>
                 </a>
-                <a href="https://apps.apple.com/app/influencer-ai-virtual-models/id6760042739" target="_blank" rel="noopener" class="project-card sr sr-d2">
+                <a href="https://apps.apple.com/app/influencer-ai-virtual-models/id6760042739" target="_blank" rel="noopener" class="project-card sr sr-d2" data-app-id="6760042739">
                     <div class="project-thumb project-thumb-2">
-                        <img src="influencer_icon.png" alt="InfluencerAI" class="project-app-icon">
+                        <img src="influencer_icon.png" alt="Char AI: Character Chat & Talk" class="project-app-icon">
                     </div>
                     <div class="project-body">
-                        <h3>InfluencerAI</h3>
+                        <h3 class="app-name">Char AI: Character Chat &amp; Talk</h3>
                         <p>AI-powered influencer content creation</p>
                     </div>
                 </a>
@@ -905,6 +905,29 @@ function goTo(id) {
 function closeMob() {
     document.getElementById('mob').classList.remove('open');
 }
+
+// Auto-fetch app names from App Store
+function updateAppNames() {
+    const cards = document.querySelectorAll('.project-card[data-app-id]');
+    const ids = Array.from(cards).map(c => c.dataset.appId).join(',');
+    if (!ids) return;
+
+    fetch('https://itunes.apple.com/lookup?id=' + ids + '&country=us')
+        .then(r => r.json())
+        .then(data => {
+            if (!data.results) return;
+            data.results.forEach(app => {
+                const card = document.querySelector('[data-app-id="' + app.trackId + '"]');
+                if (!card) return;
+                const h3 = card.querySelector('.app-name');
+                if (h3) h3.textContent = app.trackName;
+                const img = card.querySelector('.project-app-icon');
+                if (img) img.alt = app.trackName;
+            });
+        })
+        .catch(() => {});
+}
+updateAppNames();
 
 // Scroll reveal
 function initSR() {
