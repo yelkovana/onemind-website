@@ -47,6 +47,17 @@
             letter-spacing: -0.01em;
         }
         .legal-section-title:first-of-type { margin-top: 0; }
+        .legal-group-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-top: 56px;
+            margin-bottom: 8px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+            letter-spacing: -0.02em;
+        }
+        .legal-group-title + .legal-p { margin-bottom: 0; }
         .legal-p {
             font-size: 0.94rem;
             color: var(--text-secondary);
@@ -191,6 +202,9 @@
         <p class="legal-p">10. The company can provide links to other sites within the application, publish advertisements of third parties with whom it has an agreement with the Company, and direct users to the site of advertisers or contracted third parties through advertisements. The Company does not bear any responsibility for the privacy practices and policies of other Applications accessed via this link or the content they host. The user is bound by the own privacy policy of those sites.</p>
         <p class="legal-p">11. The following situations will constitute exceptions to the privacy policy, and within these cases, the collected personal and anonymous data can be shared with 3rd parties.<br>a. In cases where the legal and legal regulations require data sharing.<br>b. In cases where information about the Users is requested in line with a research or investigation conducted by the authorized administrative or judicial authorities in accordance with the procedural method.<br>c. In cases where it is necessary to provide information to protect user rights and security.<br>d. In case of any crime detection, violations of rights against the institution or third parties, detection of illegal works and transactions, and the existence of actions that cause damage in the business and transaction area of the Company.</p>
 
+        <h2 class="legal-group-title">iOS Apps</h2>
+        <p class="legal-p">The sections under this heading apply only to our applications distributed on the Apple App Store.</p>
+
         <h3 class="legal-section-title">Face Data &mdash; Maxxing app</h3>
         <p class="legal-p">12a. <strong>Scope.</strong> The provisions in this section apply only to the Maxxing app.</p>
         <p class="legal-p">12b. <strong>What we collect.</strong> When you submit a photo through Maxxing, the image is processed solely to generate your facial-feature reading and editorial sketch. We do not extract biometric identifiers (such as faceprints) from the image and do not match it against any database.</p>
@@ -210,8 +224,11 @@
         <p class="legal-p">12n. <strong>The only data processed off-device.</strong> The sole information handled outside your device is: (a) anonymous subscription and purchase status, processed by Apple and RevenueCat to manage your subscription; and (b) anonymous configuration and crash-diagnostic data via Firebase, used solely to keep the App stable and functioning. None of this data contains, references, or is derived from your photos, videos or contacts.</p>
         <p class="legal-p">12o. <strong>Your choices and rights.</strong> You can grant or revoke Photos and Contacts permissions at any time in iOS Settings &rsaquo; Privacy &amp; Security. Revoking access does not delete anything you have already cleaned. Deleting the App removes all of its local data, including any Private Vault contents. For any data-related request, contact us using the details in the Contact section below.</p>
 
+        <h2 class="legal-group-title">Android Apps</h2>
+        <p class="legal-p">The sections under this heading apply only to our applications distributed on Google Play.</p>
+
         <h3 class="legal-section-title">Voice Recordings &mdash; Musicfy (AI Music Maker)</h3>
-        <p class="legal-p">12p. <strong>Scope.</strong> The provisions in this section apply only to the Musicfy &mdash; AI Music Maker application.</p>
+        <p class="legal-p">12p. <strong>Scope.</strong> The provisions in this section apply only to the Musicfy &mdash; AI Music Maker application for Android, distributed on Google Play.</p>
         <p class="legal-p">12q. <strong>Plain-language summary.</strong> Musicfy creates songs from a description you type. Recording your own voice is entirely optional &mdash; the app can be used to make music without ever recording anything. If you do record, we keep that recording so the voice can sing your tracks, and you can erase it at any time from inside the app.</p>
         <p class="legal-p">12r. <strong>What we collect.</strong> If you choose to train a voice, we store the recording you provide, the short verification take you are asked to sing, and the resulting voice model. We also store the tracks you create together with their titles and lyrics. Text you type to describe a musical style is forwarded to the provider to generate the track and is not retained by us. The app has no user accounts, so this data is associated with a random identifier generated on your device rather than with your name or e-mail address.</p>
         <p class="legal-p">12s. <strong>How we collect it.</strong> Microphone access is requested only at the moment you tap record, and is used only for that recording. No background or passive listening occurs. Audio files you upload are read only when you select them.</p>
@@ -221,7 +238,7 @@
         <p class="legal-p">12w. <strong>Consent for voices.</strong> You may only record or upload a voice that is your own, or one you have the explicit permission of that person to use. Uploading another person&rsquo;s voice without their consent is prohibited, and such content will be removed.</p>
 
         <h3 class="legal-section-title">Room Photos &mdash; HomeGPT (AI Home Design)</h3>
-        <p class="legal-p">12x. <strong>Scope.</strong> The provisions in this section apply only to the HomeGPT &mdash; AI Home Design application.</p>
+        <p class="legal-p">12x. <strong>Scope.</strong> The provisions in this section apply only to the HomeGPT &mdash; AI Home Design application for Android, distributed on Google Play.</p>
         <p class="legal-p">12y. <strong>Plain-language summary.</strong> HomeGPT redesigns a room from a photo you choose. The app has no user accounts and asks for no name, e-mail address or phone number. The photo is sent to our server and to our AI providers only to produce the result you asked for, and the finished designs are stored on your own device.</p>
         <p class="legal-p">12z. <strong>What we collect.</strong> The photo you add to a tool (and, in the Reference Style tool, the inspiration photo), the options you choose for the design, and the designs generated from them. Our server holds the photo only in memory for the duration of the request and does not write it to a disk or a database.</p>
         <p class="legal-p">12aa. <strong>How we collect it.</strong> Only when you pick a photo or take one inside the app. On Android the photo is chosen through the system photo picker or the system camera, so the app sees only the single photo you select and has no access to the rest of your library. No background or passive collection occurs.</p>
@@ -229,6 +246,9 @@
         <p class="legal-p">12ac. <strong>Retention.</strong> kie.ai keeps an uploaded photo in its temporary file store for up to 24 hours and hosts the finished image at a temporary address so your device can download it. We keep no copy of your photos or designs on our servers. Designs, and for interior designs the original photo used for the before/after comparison, are stored locally on your device until you delete them or delete the app.</p>
         <p class="legal-p">12ad. <strong>Other data processed.</strong> (a) A random identifier generated on your device, used to issue an access token and to apply a daily generation limit; it is held in memory on our server for 24 hours and is not linked to your identity. (b) Subscription and purchase status, processed by Google Play and RevenueCat. (c) Configuration, usage statistics and crash diagnostics via Google Firebase (Remote Config, Analytics, Crashlytics). (d) The Google Play install referrer and the device advertising ID, passed to RevenueCat so we can tell which campaign an install came from; you can reset or delete the advertising ID in your Android settings. (e) If you report a design from inside the app, the reason you selected and your device identifier, so that we can review it.</p>
         <p class="legal-p">12ae. <strong>Your rights.</strong> You can delete any design inside the app, and deleting the app removes everything stored on your device. Because there is no account, nothing on our servers is tied to your identity; the device identifier expires by itself after 24 hours. <strong>To request deletion of your data,</strong> send an e-mail to <a href="mailto:onemind.development@gmail.com?subject=HomeGPT%20data%20deletion">onemind.development@gmail.com</a> with the subject &ldquo;HomeGPT data deletion&rdquo;. If you have subscribed, include your Google Play order number (it starts with &ldquo;GPA&rdquo; and is in your purchase receipt), so that we can find and delete the subscription record held for you by RevenueCat. We will confirm by e-mail once it is done. Deleting your data does not cancel a subscription, which is managed through Google Play.</p>
+
+        <h2 class="legal-group-title">All Apps</h2>
+        <p class="legal-p">The sections below apply to all of our applications.</p>
 
         <h3 class="legal-section-title">Third-Party AI Services</h3>
         <p class="legal-p">13. Our applications may use third-party AI providers to process user prompts and generate AI-based content and responses. Specifically: <strong>Nano Banana</strong> and <strong>Seedream</strong> are used by certain apps for image and content generation. <strong>OpenAI</strong> and <strong>fal.ai</strong> are used by the Maxxing app for facial-feature analysis and editorial sketch generation, as detailed in the Face Data section above. When a user interacts with the AI features of the app, the content entered by the user (such as text prompts, images, or other inputs) may be securely transmitted to these services in order to generate the requested results.</p>
